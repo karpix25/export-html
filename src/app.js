@@ -84,6 +84,12 @@ router.post(
       await page.setContent(body.html, { waitUntil: "load" });
     }
     const options = body.export;
+
+    if (options.omitBackground) {
+      await page.addStyleTag({
+        content: "html, body { background: transparent !important; }",
+      });
+    }
     if (options.type === "png") {
       delete options.quality;
     }
